@@ -6,7 +6,7 @@ using namespace std;
 class Heap{
     vector<int> v;
     bool minHeap; // since we will be using the same class for max and min heap
-    bool compare(int a, int b){
+    bool compare(int a, int b){  // comparator fucntion
         if(minHeap){
             return a < b;
         }
@@ -14,7 +14,7 @@ class Heap{
             return a > b;
         }
     }
-    public:
+    public: 
     Heap(int default_size = 10, bool type = true){  // just accepting the default parameters which get overwritten when we pass user-defined values
         v.reserve(default_size); // reserving the size of the vector until the size is not equals to 10
         v.push_back(-1); // as our array representation starts from 1st index, we are blocking the 0th index with -1
@@ -26,9 +26,9 @@ class Heap{
         int idx = v.size() - 1;
         int parent = idx / 2;
 
-        while(idx > 1 && compare(v[idx], v[parent])){
+        while(idx > 1 && compare(v[idx], v[parent])){ // main swap condition 
             swap(v[idx], v[parent]);
-            idx = parent;
+            idx = parent; // changing the idx as the idx and the parent both goes up after the swapping
             parent /= 2;
         }
     }
