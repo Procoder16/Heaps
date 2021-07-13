@@ -20,17 +20,17 @@ class Heap{
         int min_idx = idx;
         int last = v.size() - 1;
 
-        int left = 2*idx;
-        int right = 2*idx + 1;
+        int left = 2*idx;  // first child
+        int right = 2*idx + 1; // second child
 
-        if(left <= last && compare(v[left], v[min_idx])){
+        if(left <= last && compare(v[left], v[min_idx])){  // comparing left child with the min_idx which is initially the idx itself 
             min_idx = left;
         }
-        if(right <= last && compare(v[right], v[min_idx])){
+        if(right <= last && compare(v[right], v[min_idx])){ // comparing the right child with the min_idx(if changed)
             min_idx = right;
         }
 
-        if(min_idx != idx){
+        if(min_idx != idx){ // the swapping takes place only if the min_idx is found in the children... this is also thr base case
             swap(v[min_idx], v[idx]);
             heapify(min_idx);
         } 
@@ -63,7 +63,7 @@ class Heap{
         int last = v.size() - 1;
         swap(v[1], v[last]);
         v.pop_back();
-        heapify(1);
+        heapify(1);  // passing 1 as the heapify will be taking place from the first place only
     }
 
     bool empty(){
@@ -73,7 +73,7 @@ class Heap{
 
 int main(){
 
-    Heap h(6, false);
+    Heap h(6, false);  // adding parameters for making it a max heap
     int n;
     cin>>n;
 
