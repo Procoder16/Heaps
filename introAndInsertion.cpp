@@ -14,6 +14,28 @@ class Heap{
             return a > b;
         }
     }
+
+    void heapify(int idx){
+
+        int min_idx = idx;
+        int last = v.size() - 1;
+
+        int left = 2*idx;
+        int right = 2*idx + 1;
+
+        if(left <= last && compare(v[left], v[min_idx])){
+            min_idx = left;
+        }
+        if(right <= last && compare(v[right], v[min_idx])){
+            min_idx = right;
+        }
+
+        if(min_idx != idx){
+            swap(v[min_idx], v[idx]);
+            heapify(min_idx);
+        } 
+    }
+
     public: 
     Heap(int default_size = 10, bool type = true){  // just accepting the default parameters which get overwritten when we pass user-defined values
         v.reserve(default_size); // reserving the size of the vector until the size is not equals to 10
@@ -32,8 +54,39 @@ class Heap{
             parent /= 2;
         }
     }
+
+    int top(){
+        return v[1];
+    }
+
+    void pop(){
+        int last = v.size() - 1;
+        swap(v[1], v[last]);
+        v.pop_back();
+        heapify(1);
+    }
+
+    bool empty(){
+        return v.size() == 1;
+    }
 };
 
 int main(){
 
+    Heap h(6, false);
+    int n;
+    cin>>n;
+
+    for(int i = 0; i < n; i++){
+        int no;
+        cin>>no;
+        h.push(no);
+    }
+
+    while(!h.empty()){
+        cout<<h.top()<<" ";
+        h.pop();
+    }
+
+    return 0;
 }
