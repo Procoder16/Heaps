@@ -47,7 +47,7 @@ void heapify(vector<int> &v, int idx){ // taking the vector input also as we wil
     }
 
 void buildHeapOptimised(vector<int> &v){
-    for(int i = (v.size()-1)/2; i>=1; i--){
+    for(int i = (v.size()-1)/2; i>=1; i--){ //starting from the first non-leaf node
         heapify(v, i);
     }
 }
