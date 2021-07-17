@@ -33,3 +33,58 @@ using namespace std;
                 > Then simply push the element to the left heap and the median would again be the average of the two.       
 */
 
+int main(){
+
+    priority_queue<int> leftHeap;   // max heap
+    priority_queue<int, vector<int>, greater<int>> rightHeap;   // min heap
+
+    int n;
+    cin>>n;
+
+    leftHeap.push(n);
+    float med = n;
+    cout<<"Current Median:"<<med<<endl;
+
+    cin>>n;
+    while(n != -1){
+
+        if(leftHeap.size() > rightHeap.size()){
+            if(n <= med){
+                rightHeap.push(leftHeap.top());
+                leftHeap.pop();
+                leftHeap.push(n);
+            }
+            else{
+                rightHeap.push(n);
+            }
+            med = (leftHeap.top() + rightHeap.top())/2.0; 
+        }
+        else if(leftHeap.size() == rightHeap.size()){
+            if(n > med){
+                rightHeap.push(n);
+                med = rightHeap.top();
+            }
+            else{
+                leftHeap.push(n);
+                med = leftHeap.top();
+            }
+        }
+
+        else{
+            if(n > med){
+                leftHeap.push(rightHeap.top());
+                rightHeap.pop();
+                rightHeap.push(n);
+            }
+            else{
+                leftHeap.push(n);
+            }
+            med = (leftHeap.top() + rightHeap.top())/2.0;
+        }
+
+        cout<<"Current Median:"<<med<<endl;
+        cin>>n;
+    }
+
+    return 0;
+}
