@@ -1,6 +1,21 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+/*
+    The brute force approach that most of us will think is that:
+        > Copy all the elements of the subsequent arrays to a different array and then finally sort it.
+        > But this apprach is very expensive in terms of time and space both.
+
+    The optimised approach would be that we take the help of heaps/priority queue and a self defined pair
+        > The pair would store the value of the element in the first place and the second place would contain another pair with row 
+        and column number
+        > Now start with pushing all the first elements of the respective arrays to the heap which is definitely a min heap.
+        > Now store the element in a variable and then pop the top element.
+        > Now the first part of the element would be pushed to the result vector
+        > And then we would check if there are any further elements left in that row, if yes push it to the heap
+        > This process would continue until the size of the queue is not 0 
+*/
+
 typedef pair<int, pair<int, int>> node; // creating our custom pair to store the value, its row number, its column number
 
 vector<int> mergeKSortedArrays(vector<vector<int>> arr){
