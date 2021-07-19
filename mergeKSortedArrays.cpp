@@ -49,6 +49,14 @@ int main(){
 
     vector<vector<int>> arr = {{2,6,12,15}, {1,3,14,10}, {3,5,8,10}};
 
+    cout<<"GIVEN VECTOR:"<<endl;
+    for(int i = 0; i < arr.size(); i++){
+        for(int j = 0; j < arr[i].size(); j++){
+            cout<<arr[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+
     vector<int> output = mergeKSortedArrays(arr);
 
     cout<<"MERGED ARRAY:";
