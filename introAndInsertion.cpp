@@ -1,91 +1,104 @@
 #include<iostream>
-#include<vector>
 
 using namespace std;
 
-class Heap{
-    vector<int> v;
-    bool minHeap; // since we will be using the same class for max and min heap
-    bool compare(int a, int b){  // comparator fucntion
-        if(minHeap){
-            return a < b;
-        }
-        else{
-            return a > b;
-        }
+class heap{
+    public:
+    int arr[100];
+    int size;
+
+    heap(){
+        arr[0] = -1;
+        size = 0;
     }
 
-    void heapify(int idx){
+    void insert(int val){
+        size++;
+        int index = size;
+        arr[index] = val;
 
-        int min_idx = idx;
-        int last = v.size() - 1;
+        while(index > 1){
+            int parent = index / 2;
 
-        int left = 2*idx;  // first child
-        int right = 2*idx + 1; // second child
-
-        if(left <= last && compare(v[left], v[min_idx])){  // comparing left child with the min_idx which is initially the idx itself 
-            min_idx = left;
-        }
-        if(right <= last && compare(v[right], v[min_idx])){ // comparing the right child with the min_idx(if changed)
-            min_idx = right;
-        }
-
-        if(min_idx != idx){ // the swapping takes place only if the min_idx is found in the children... this is also thr base case
-            swap(v[min_idx], v[idx]);
-            heapify(min_idx);
-        } 
-    }
-
-    public: 
-    Heap(int default_size = 10, bool type = true){  // just accepting the default parameters which get overwritten when we pass user-defined values
-        v.reserve(default_size); // reserving the size of the vector until the size is not equals to 10
-        v.push_back(-1); // as our array representation starts from 1st index, we are blocking the 0th index with -1
-        minHeap = type; // assigning the type of the heap we are going to build
-    }
-
-    void push(int d){
-        v.push_back(d);
-        int idx = v.size() - 1;
-        int parent = idx / 2;
-
-        while(idx > 1 && compare(v[idx], v[parent])){ // main swap condition 
-            swap(v[idx], v[parent]);
-            idx = parent; // changing the idx as the idx and the parent both goes up after the swapping
-            parent /= 2;
+            if(arr[parent] < arr[index]){
+                swap(arr[parent], arr[index]);
+                index = parent;
+            }else{
+                return;
+            }
         }
     }
 
-    int top(){
-        return v[1];
+    void deleteFromHeap(){
+        if(size == 0){
+            cout<<"NOTHING TO DELETE!";
+        }
+
+        arr[1] = arr[size];
+        size--;
+
+        int i = 1;
+        while(i < size){
+            int leftIndex = 2 * i;
+            int rightIndex = 2 * i + 1;
+
+            if(leftIndex < size && arr[i] < arr[leftIndex]){
+                swap(arr[i], arr[leftIndex]);
+            }else if(rightIndex < size && arr[i] < arr[rightIndex]){
+                swap(arr[i], arr[rightIndex]);
+            }else{
+                return;
+            }
+        }
     }
 
-    void pop(){
-        int last = v.size() - 1;
-        swap(v[1], v[last]);
-        v.pop_back();
-        heapify(1);  // passing 1 as the heapify will be taking place from the first place only
-    }
-
-    bool empty(){
-        return v.size() == 1;
+    void print(){
+        for(int i = 1; i <= size; i++){
+            cout<<arr[i]<<" ";
+        }
+        cout<<endl;
     }
 };
 
-int main(){
+void heapify(int arr[], int n, int i){
+    int largest = i;
+    int left = 2 * i;
+    int right = 2 * i + 1;
 
-    Heap h(6, false);  // adding parameters for making it a max heap
-    int n;
-    cin>>n;
-
-    for(int i = 0; i < n; i++){
-        int no;
-        cin>>no;
-        h.push(no);
+    if(left < n && arr[largest] < arr[left]){
+        largest = left;
+    }
+    if(right < n && arr[largest] < arr[right]){
+        largest = right;
     }
 
-    while(!h.empty()){
-        cout<<h.top()<<" ";
-        h.pop();
+    if(largest != i){
+        swap(arr[largest], arr[i]);
+        heapify(arr, n, largest);
+    }
+}
+
+int main(){
+
+    heap hp;
+    hp.insert(55);
+    hp.insert(60);
+    hp.insert(40);
+    hp.insert(70);
+
+    hp.print();
+
+    hp.deleteFromHeap();
+
+    hp.print();
+
+    //Testing heapify function
+
+    int arr[] = {-1, 54, 53, 55, 52, 50};
+    int n = 5;
+
+    for(int i = n / 2; i > 0; i--){
+        heapify(arr, n, i);
     }
 
     return 0;
